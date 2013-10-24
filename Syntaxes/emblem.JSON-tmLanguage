@@ -1,0 +1,795 @@
+// [PackageDev] target_format: plist, ext: tmLanguage
+    { "name": "Emblem",
+  "scopeName": "text.html.emblem",
+  "fileTypes": ["emblem"],
+  "uuid": "91950d77-6064-466b-9db6-a24bafbad03f",
+  "repository": {
+        "interpolated_value": {
+            "patterns": [
+                {
+                    "name": "invalid.illegal.tag.emblem", 
+                    "match": "{"
+                }, 
+                {
+                    "include": "source.js"
+                }
+            ], 
+            "begin": "(?<!\\\\)[#!]\\{(?=.*?\\})", 
+            "end": "\\}", 
+            "name": "string.interpolated.emblem"
+        }, 
+        "unbuffered_code": {
+            "comment": "name = function() {}", 
+            "begin": "(-|(([a-zA-Z0-9_]+)\\s+=))", 
+            "end": "$", 
+            "name": "javascript.embedded.emblem", 
+            "beginCaptures": {
+                "3": {
+                    "name": "variable.parameter.javascript.embedded.emblem"
+                }
+            }, 
+            "patterns": [
+                {
+                    "include": "source.js"
+                }
+            ]
+        }, 
+        "tag_attribute_value_brackets": {
+            "patterns": [
+                {
+                    "include": "#tag_attribute_value_paren"
+                }, 
+                {
+                    "include": "#tag_attribute_value_brackets"
+                }, 
+                {
+                    "include": "#tag_attribute_value_braces"
+                }, 
+                {
+                    "include": "#string"
+                }, 
+                {
+                    "include": "source.js"
+                }
+            ], 
+            "begin": "\\[", 
+            "end": "\\]", 
+            "name": "js.value.attribute.tag.emblem"
+        }, 
+        "embedded_html": {
+            "patterns": [
+                {
+                    "include": "text.html.basic"
+                }, 
+                {
+                    "include": "#interpolated_value"
+                }
+            ], 
+            "begin": "(?=<[^>]*>)", 
+            "end": "$|(?=>)", 
+            "name": "html"
+        }, 
+        "printed_expression": {
+            "captures": {
+                "1": {
+                    "name": "constant"
+                }
+            }, 
+            "begin": "(!?\\=)\\s*", 
+            "end": "$", 
+            "patterns": [
+                {
+                    "include": "source.js"
+                }
+            ]
+        }, 
+        "tag_attribute_value_braces": {
+            "patterns": [
+                {
+                    "include": "#tag_attribute_value_paren"
+                }, 
+                {
+                    "include": "#tag_attribute_value_brackets"
+                }, 
+                {
+                    "include": "#tag_attribute_value_braces"
+                }, 
+                {
+                    "include": "#string"
+                }, 
+                {
+                    "include": "source.js"
+                }
+            ], 
+            "begin": "\\{", 
+            "end": "\\}", 
+            "name": "js.value.attribute.tag.emblem"
+        }, 
+        "complete_tag": {
+            "patterns": [
+                {
+                    "include": "#blocks_and_includes"
+                }, 
+                {
+                    "include": "#unbuffered_code"
+                }, 
+                {
+                    "include": "#mixins"
+                }, 
+                {
+                    "include": "#flow_control"
+                }, 
+                {
+                    "name": "invalid.illegal.name.tag.emblem", 
+                    "match": "(?<=:)\\w.*$"
+                }, 
+                {
+                    "include": "#tag_name"
+                }, 
+                {
+                    "include": "#tag_id"
+                }, 
+                {
+                    "include": "#tag_classes"
+                }, 
+                {
+                    "include": "#tag_attributes"
+                }, 
+                {
+                    "captures": {
+                        "2": {
+                            "name": "invalid.illegal.end.tag.emblem"
+                        }, 
+                        "4": {
+                            "name": "invalid.illegal.end.tag.emblem"
+                        }
+                    }, 
+                    "match": "((\\.)\\s+$)|((:)\\s*$)"
+                }, 
+                {
+                    "include": "#printed_expression"
+                }, 
+                {
+                    "include": "#tag_text"
+                }
+            ], 
+            "begin": "(?=[\\w.#])|(:\\s*)", 
+            "end": "(\\.?$)|(?=:.)", 
+            "name": "complete_tag.emblem"
+        }, 
+        "case_when_paren": {
+            "patterns": [
+                {
+                    "include": "#case_when_paren"
+                }, 
+                {
+                    "name": "invalid.illegal.name.tag.emblem", 
+                    "match": ":"
+                }, 
+                {
+                    "include": "source.js"
+                }
+            ], 
+            "begin": "\\(", 
+            "end": "\\)", 
+            "name": "js.when.control.flow.emblem"
+        }, 
+        "blocks_and_includes": {
+            "comment": "Template blocks and includes.", 
+            "captures": {
+                "1": {
+                    "name": "storage.type.import.include.emblem"
+                }, 
+                "4": {
+                    "name": "variable.control.import.include.emblem"
+                }
+            }, 
+            "name": "meta.first-class.emblem", 
+            "match": "(extends|include|yield|append|prepend|block( (append|prepend))?)\\s+(.*)$"
+        }, 
+        "html_entity": {
+            "patterns": [
+                {
+                    "name": "constant.character.entity.html.text.emblem", 
+                    "match": "(&)([a-zA-Z0-9]+|#[0-9]+|#x[0-9a-fA-F]+)(;)"
+                }, 
+                {
+                    "name": "invalid.illegal.html_entity.text.emblem", 
+                    "match": "[<>&]"
+                }
+            ]
+        }, 
+        "string": {
+            "patterns": [
+                {
+                    "name": "constant.character.quoted.emblem", 
+                    "match": "\\\\((x[0-9a-fA-F]{2})|(u[0-9]{4})|.)"
+                }, 
+                {
+                    "include": "#interpolated_value"
+                }
+            ], 
+            "begin": "(['\"])", 
+            "end": "(?<!\\\\)\\1", 
+            "name": "string.quoted.emblem"
+        }, 
+        "tag_text": {
+            "patterns": [
+                {
+                    "include": "#embedded_html"
+                }, 
+                {
+                    "include": "#html_entity"
+                }, 
+                {
+                    "include": "#interpolated_value"
+                }
+            ], 
+            "begin": "(?=.)", 
+            "end": "$", 
+            "name": "text.emblem"
+        }, 
+        "mixins": {
+            "comment": "Mixin declaration and use, including the new '+' syntax.", 
+            "begin": "(((mixin\\s+)|\\+)([\\w-]+))\\s*", 
+            "end": "$", 
+            "name": "meta.mixin.emblem", 
+            "beginCaptures": {
+                "2": {
+                    "name": "storage.type.function.emblem"
+                }, 
+                "4": {
+                    "name": "entity.name.function.emblem"
+                }
+            }, 
+            "patterns": [
+                {
+                    "patterns": [
+                        {
+                            "include": "source.js"
+                        }
+                    ], 
+                    "begin": "", 
+                    "end": "$", 
+                    "name": "args.mixin.emblem"
+                }
+            ]
+        }, 
+        "tag_id": {
+            "name": "constant.id.tag.emblem", 
+            "match": "#[\\w-]+"
+        }, 
+        "case_conds": {
+            "comment": "Jade case conditionals.", 
+            "begin": "(default|when)((\\s+|(?=:))|$)", 
+            "end": "$", 
+            "name": "meta.control.flow.emblem", 
+            "captures": {
+                "1": {
+                    "name": "storage.type.function.emblem"
+                }
+            }, 
+            "patterns": [
+                {
+                    "patterns": [
+                        {
+                            "include": "#case_when_paren"
+                        }, 
+                        {
+                            "include": "source.js"
+                        }
+                    ], 
+                    "begin": "\\G(?!:)", 
+                    "end": "(?=:\\s+)|$", 
+                    "name": "js.embedded.control.flow.emblem"
+                }, 
+                {
+                    "patterns": [
+                        {
+                            "include": "#complete_tag"
+                        }
+                    ], 
+                    "begin": ":\\s+", 
+                    "end": "$", 
+                    "name": "tag.case.control.flow.emblem"
+                }
+            ]
+        }, 
+        "filter_args_paren": {
+            "patterns": [
+                {
+                    "include": "#filter_args_paren"
+                }
+            ], 
+            "begin": "\\(", 
+            "end": "\\)|$"
+        }, 
+        "tag_attribute_value_paren": {
+            "patterns": [
+                {
+                    "include": "#tag_attribute_value_paren"
+                }, 
+                {
+                    "include": "#tag_attribute_value_brackets"
+                }, 
+                {
+                    "include": "#tag_attribute_value_braces"
+                }, 
+                {
+                    "include": "#string"
+                }, 
+                {
+                    "include": "source.js"
+                }
+            ], 
+            "begin": "\\(", 
+            "end": "\\)", 
+            "name": "js.value.attribute.tag.emblem"
+        }, 
+        "tag_attributes": {
+            "captures": {
+                "1": {
+                    "name": "constant.name.attribute.tag.emblem"
+                }
+            }, 
+            "begin": "(\\()", 
+            "end": "(\\))", 
+            "name": "attibutes.tag.emblem", 
+            "patterns": [
+                {
+                    "captures": {
+                        "1": {
+                            "name": "entity.other.attribute-name.tag.emblem"
+                        }
+                    }, 
+                    "name": "attribues.tag.emblem", 
+                    "match": "([^\\s(),=]+)\\s*((?=\\))|,|$)"
+                }, 
+                {
+                    "patterns": [
+                        {
+                            "include": "#tag_attribute_value_paren"
+                        }, 
+                        {
+                            "include": "#tag_attribute_value_brackets"
+                        }, 
+                        {
+                            "include": "#tag_attribute_value_braces"
+                        }, 
+                        {
+                            "include": "#string"
+                        }, 
+                        {
+                            "include": "source.js"
+                        }
+                    ], 
+                    "begin": "([^\\s(),=]*[^\\s(),=!])\\s*(!?\\=)", 
+                    "end": "((?=\\))|,|$)", 
+                    "name": "attributes.tag.emblem", 
+                    "beginCaptures": {
+                        "1": {
+                            "name": "entity.other.attribute-name.tag.emblem"
+                        }, 
+                        "2": {
+                            "name": "punctuation.separator.key-value.emblem"
+                        }
+                    }
+                }
+            ]
+        }, 
+        "filter_args": {
+            "captures": {
+                "1": {
+                    "name": "meta.args.filter.emblem"
+                }, 
+                "2": {
+                    "name": "invalid.illegal.extra.args.filter.emblem"
+                }
+            }, 
+            "begin": "\\G(\\()", 
+            "end": "(\\))(.*?$)", 
+            "name": "args.filter.emblem", 
+            "patterns": [
+                {
+                    "begin": "([^\\s(),=]+)(=?)", 
+                    "end": "((?=\\))|,|$)", 
+                    "name": "attributes.tag.emblem", 
+                    "contentName": "string.value.args.filter.emblem", 
+                    "beginCaptures": {
+                        "1": {
+                            "name": "entity.other.attribute-name.tag.emblem"
+                        }, 
+                        "2": {
+                            "name": "punctuation.separator.key-value.emblem"
+                        }
+                    }, 
+                    "patterns": [
+                        {
+                            "include": "#filter_args_paren"
+                        }
+                    ]
+                }
+            ]
+        }, 
+        "tag_classes": {
+            "name": "string.name.classes.tag.emblem", 
+            "match": "\\.[\\w-]+"
+        }, 
+        "tag_name": {
+            "patterns": [
+                {
+                    "patterns": [
+                        {
+                            "name": "invalid.illegal.tag.emblem", 
+                            "match": "{"
+                        }, 
+                        {
+                            "include": "source.js"
+                        }
+                    ], 
+                    "begin": "\\G(?<=\\{)", 
+                    "end": "(?=\\})", 
+                    "name": "entity.name.tag.emblem"
+                }
+            ], 
+            "begin": "([#!]\\{(?=.*?\\}))|(\\w(([\\w:-]+[\\w-])|([\\w-]*)))", 
+            "end": "(\\G(?<!\\5[^\\w-]))|\\}|$", 
+            "name": "entity.name.tag.emblem"
+        }, 
+        "flow_control": {
+            "comment": "Jade control flow.", 
+            "begin": "(for|if|else if|else|each|until|while|unless|case)(\\s+|$)", 
+            "end": "$", 
+            "name": "meta.control.flow.emblem", 
+            "captures": {
+                "1": {
+                    "name": "storage.type.function.emblem"
+                }
+            }, 
+            "patterns": [
+                {
+                    "patterns": [
+                        {
+                            "include": "source.js"
+                        }
+                    ], 
+                    "begin": "", 
+                    "end": "$", 
+                    "name": "js.embedded.control.flow.emblem"
+                }
+            ]
+        }
+    }, 
+  "patterns": [
+        {
+            "comment": "Doctype declaration.", 
+            "name": "comment.other.doctype.emblem", 
+            "match": "^(!!!|doctype)(\\s*[a-zA-Z0-9-_]+)?"
+        }, 
+        {
+            "comment": "Unbuffered (jade-only) comments.", 
+            "begin": "^(\\s*)//-", 
+            "end": "^(?!(\\1\\s)|\\s*$)", 
+            "name": "comment.unbuffered.block.emblem"
+        }, 
+        {
+            "comment": "Buffered (html) comments.", 
+            "patterns": [
+                {
+                    "comment": "Buffered comments inside buffered comments will generate invalid html.", 
+                    "captures": {
+                        "1": {
+                            "name": "invalid.illegal.comment.comment.block.emblem"
+                        }
+                    }, 
+                    "name": "string.comment.buffered.block.emblem", 
+                    "match": "^\\s*(//)(?!-)"
+                }
+            ], 
+            "begin": "^(\\s*)//", 
+            "end": "^(?!(\\1\\s)|\\s*$)", 
+            "name": "string.comment.buffered.block.emblem"
+        }, 
+        {
+            "comment": "Script tag with JavaScript code.", 
+            "begin": "^(\\s*)(script)(?=[.#(\\s])", 
+            "end": "^(?!(\\1\\s)|\\s*$)", 
+            "name": "source.script.emblem", 
+            "beginCaptures": {
+                "2": {
+                    "name": "entity.name.tag.script.emblem"
+                }
+            }, 
+            "patterns": [
+                {
+                    "patterns": [
+                        {
+                            "include": "#tag_attributes"
+                        }
+                    ], 
+                    "begin": "\\G(?=\\()", 
+                    "end": "$", 
+                    "name": "stuff.tag.script.emblem"
+                }, 
+                {
+                    "patterns": [
+                        {
+                            "include": "#complete_tag"
+                        }
+                    ], 
+                    "begin": "\\G(?=[.#])", 
+                    "end": "$", 
+                    "name": "stuff.tag.script.emblem"
+                }, 
+                {
+                    "include": "source.js"
+                }
+            ]
+        }, 
+        {
+            "comment": "Style tag with CSS code.", 
+            "begin": "^(\\s*)(style)(?=[.#(\\s])", 
+            "end": "^(?!(\\1\\s)|\\s*$)", 
+            "name": "source.style.emblem", 
+            "beginCaptures": {
+                "2": {
+                    "name": "entity.name.tag.script.emblem"
+                }
+            }, 
+            "patterns": [
+                {
+                    "patterns": [
+                        {
+                            "include": "#tag_attributes"
+                        }
+                    ], 
+                    "begin": "\\G(?=\\()", 
+                    "end": "$", 
+                    "name": "stuff.tag.style.emblem"
+                }, 
+                {
+                    "patterns": [
+                        {
+                            "include": "#complete_tag"
+                        }
+                    ], 
+                    "begin": "\\G(?=[.#])", 
+                    "end": "$", 
+                    "name": "stuff.tag.style.emblem"
+                }, 
+                {
+                    "include": "source.css"
+                }
+            ]
+        }, 
+        {
+            "patterns": [
+                {
+                    "include": "#filter_args"
+                }, 
+                {
+                    "include": "text.html.markdown"
+                }
+            ], 
+            "begin": "^(\\s*):(markdown)(?=\\(|$)$", 
+            "end": "^(?!(\\1\\s)|\\s*$)", 
+            "name": "text.markdown.filter.emblem", 
+            "beginCaptures": {
+                "2": {
+                    "name": "constant.language.name.markdown.filter.emblem"
+                }
+            }
+        }, 
+        {
+            "patterns": [
+                {
+                    "include": "#filter_args"
+                }, 
+                {
+                    "include": "source.sass"
+                }
+            ], 
+            "begin": "^(\\s*):(sass)(?=\\(|$)$", 
+            "end": "^(?!(\\1\\s)|\\s*$)", 
+            "name": "source.sass.filter.emblem", 
+            "beginCaptures": {
+                "2": {
+                    "name": "constant.language.name.sass.filter.emblem"
+                }
+            }
+        }, 
+        {
+            "patterns": [
+                {
+                    "include": "#filter_args"
+                }, 
+                {
+                    "include": "source.less"
+                }
+            ], 
+            "begin": "^(\\s*):(less)(?=\\(|$)$", 
+            "end": "^(?!(\\1\\s)|\\s*$)", 
+            "name": "source.less.filter.emblem", 
+            "beginCaptures": {
+                "2": {
+                    "name": "constant.language.name.less.filter.emblem"
+                }
+            }
+        }, 
+        {
+            "patterns": [
+                {
+                    "include": "#filter_args"
+                }, 
+                {
+                    "include": "source.stylus"
+                }
+            ], 
+            "begin": "^(\\s*):(stylus)(?=\\(|$)$", 
+            "end": "^(?!(\\1\\s)|\\s*$)", 
+            "name": "source.stylus.filter.emblem", 
+            "beginCaptures": {
+                "2": {
+                    "name": "constant.language.name.stylus.filter.emblem"
+                }
+            }
+        }, 
+        {
+            "patterns": [
+                {
+                    "include": "#filter_args"
+                }, 
+                {
+                    "include": "source.coffee"
+                }
+            ], 
+            "begin": "^(\\s*):(coffeescript)(?=\\(|$)", 
+            "end": "^(?!(\\1\\s)|\\s*$)", 
+            "name": "source.coffeescript.filter.emblem", 
+            "beginCaptures": {
+                "2": {
+                    "name": "constant.language.name.coffeescript.filter.emblem"
+                }
+            }
+        }, 
+        {
+            "comment": "Generic Jade filter.", 
+            "begin": "^(\\s*)((:(?=.))|(:$))", 
+            "end": "^(?!(\\1\\s)|\\s*$)", 
+            "name": "text.generic.filter.emblem", 
+            "beginCaptures": {
+                "4": {
+                    "name": "invalid.illegal.empty.generic.filter.emblem"
+                }
+            }, 
+            "patterns": [
+                {
+                    "patterns": [
+                        {
+                            "name": "invalid.illegal.name.generic.filter.emblem", 
+                            "match": "\\G\\("
+                        }, 
+                        {
+                            "name": "constant.language.name.generic.filter.emblem", 
+                            "match": "\\w"
+                        }, 
+                        {
+                            "include": "#filter_args"
+                        }, 
+                        {
+                            "name": "invalid.illegal.name.generic.filter.emblem", 
+                            "match": "\\W"
+                        }
+                    ], 
+                    "begin": "\\G(?<=:)(?=.)", 
+                    "end": "$", 
+                    "name": "name.generic.filter.emblem"
+                }
+            ]
+        }, 
+        {
+            "comment": "Generated from dot_block_tag.py", 
+            "begin": "^(\\s*)(?=[\\w.#].*?\\.$)(?=(?:(?:(?:(?:(?:#[\\w-]+)|(?:\\.[\\w-]+))|(?:(?:[#!]\\{[^}]*\\})|(?:\\w(?:(?:[\\w:-]+[\\w-])|(?:[\\w-]*)))))(?:(?:#[\\w-]+)|(?:\\.[\\w-]+)|(?:\\((?:[^()\\'\\\"]*(?:(?:\\'(?:[^\\']|(?:(?<!\\\\)\\\\\\'))*\\')|(?:\\\"(?:[^\\\"]|(?:(?<!\\\\)\\\\\\\"))*\\\")))*[^()]*\\))*)*)(?:(?:(?::\\s+)|(?<=\\)))(?:(?:(?:(?:#[\\w-]+)|(?:\\.[\\w-]+))|(?:(?:[#!]\\{[^}]*\\})|(?:\\w(?:(?:[\\w:-]+[\\w-])|(?:[\\w-]*)))))(?:(?:#[\\w-]+)|(?:\\.[\\w-]+)|(?:\\((?:[^()\\'\\\"]*(?:(?:\\'(?:[^\\']|(?:(?<!\\\\)\\\\\\'))*\\')|(?:\\\"(?:[^\\\"]|(?:(?<!\\\\)\\\\\\\"))*\\\")))*[^()]*\\))*)*))*)\\.$)(?:(?:(#[\\w-]+)|(\\.[\\w-]+))|((?:[#!]\\{[^}]*\\})|(?:\\w(?:(?:[\\w:-]+[\\w-])|(?:[\\w-]*)))))", 
+            "end": "^(?!(\\1\\s)|\\s*$)", 
+            "name": "text.block.dot.tag.emblem", 
+            "beginCaptures": {
+                "3": {
+                    "name": "string.name.classes.tag.emblem"
+                }, 
+                "2": {
+                    "name": "constant.id.tag.emblem"
+                }, 
+                "4": {
+                    "name": "entity.name.tag.emblem"
+                }
+            }, 
+            "patterns": [
+                {
+                    "include": "#tag_attributes"
+                }, 
+                {
+                    "include": "#complete_tag"
+                }, 
+                {
+                    "patterns": [
+                        {
+                            "include": "#embedded_html"
+                        }, 
+                        {
+                            "include": "#html_entity"
+                        }, 
+                        {
+                            "include": "#interpolated_value"
+                        }
+                    ], 
+                    "begin": "^(?=.)", 
+                    "end": "$", 
+                    "name": "text.block.emblem"
+                }
+            ]
+        }, 
+        {
+            "comment": "All constructs that generally span a single line starting with any number of white-spaces.", 
+            "patterns": [
+                {
+                    "include": "#blocks_and_includes"
+                }, 
+                {
+                    "include": "#unbuffered_code"
+                }, 
+                {
+                    "include": "#mixins"
+                }, 
+                {
+                    "include": "#flow_control"
+                }, 
+                {
+                    "include": "#case_conds"
+                }, 
+                {
+                    "comment": "Tag pipe text line.", 
+                    "patterns": [
+                        {
+                            "include": "#embedded_html"
+                        }, 
+                        {
+                            "include": "#html_entity"
+                        }, 
+                        {
+                            "include": "#interpolated_value"
+                        }
+                    ], 
+                    "begin": "\\|", 
+                    "end": "$", 
+                    "name": "text.block.pipe.emblem"
+                }, 
+                {
+                    "include": "#printed_expression"
+                }, 
+                {
+                    "comment": "Line starting with characters incompatible with tag name/id/class is standalone text.", 
+                    "patterns": [
+                        {
+                            "include": "#embedded_html"
+                        }, 
+                        {
+                            "include": "#html_entity"
+                        }, 
+                        {
+                            "include": "#interpolated_value"
+                        }
+                    ], 
+                    "begin": "\\G((?=<)|[^\\w.#]|(\\.[^\\w-]))|(#[^\\{\\w-])", 
+                    "end": "$", 
+                    "name": "text.emblem"
+                }, 
+                {
+                    "include": "#complete_tag"
+                }
+            ], 
+            "begin": "^\\s*", 
+            "end": "$", 
+            "name": "tag.emblem"
+        }
+    ]
+}
